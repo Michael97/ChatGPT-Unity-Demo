@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8324582300729211270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8324582300729211269}
+  - component: {fileID: 8324582300729211268}
+  m_Layer: 0
+  m_Name: GPTInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8324582300729211269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324582300729211270}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.6587768, y: 0.16856071, z: 0.16416179}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8324582300729211268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8324582300729211270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fb4e1dd636e8644a0175b965661c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerContainerPrefab: {fileID: 7340658292027270028, guid: fd25897026b9d37418196df3e34446bb, type: 3}
+  m_chatGptAgentData:
+  - {fileID: 11400000, guid: a5a54ccc16aae994287f091d1e2ef13e, type: 2}
+  - {fileID: 11400000, guid: a5a54ccc16aae994287f091d1e2ef13e, type: 2}
+  m_chatGptAgentList: []
+  m_chatCompleterPrefab: {fileID: 4313721345538835373, guid: b12a589984f5060478b0b8fac0c2f71e, type: 3}
+  minSpawnPosition: {x: -3, y: -3}
+  maxSpawnPosition: {x: 3, y: 3}
