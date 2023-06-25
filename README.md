@@ -4,9 +4,7 @@
 
 This project, currently under active development, represents a hands-on exploration of Large Language Models (LLMs) in the gaming industry. By integrating the OpenAI API wrapper into a rudimentary 2D game, I've equipped an agent with the ability to understand, interact with, and navigate the gaming environment based on predefined actions. This approach underscores the potential of LLMs to augment gameplay and bolster player immersion.
 
-While this project demonstrates the initial promise of LLMs in gaming - enhancing game experiences, facilitating complex in-game situations, and potentially sparking innovation in game design - it's crucial to understand that it remains a work in progress. As the developer, I continually refine and update the project to improve its demonstration of LLMs in gaming. This project aims to serve as a practical example for other developers interested in harnessing the power of LLMs within their gaming projects specifically within Unity.
-
-
+While this project demonstrates the initial promise of LLMs in gaming, including enhancing game experiences, facilitating complex in-game situations, and potentially sparking innovation in game design, it's important to note that it is an ongoing work in progress. As a solo developer working on this project in my spare time, updates may be sporadic. Nonetheless, this project aims to serve as a practical example for other developers interested in harnessing the power of LLMs within their gaming projects, specifically within the Unity game engine.
 
 
 
