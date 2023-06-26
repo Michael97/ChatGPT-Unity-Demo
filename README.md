@@ -74,7 +74,7 @@ The logs indicate whether functions executed successfully or encountered any err
 The AI agent in this project operates based on a structured message exchange system between Unity and the ChatGPT model. Here's an overview of how it functions:
 
 ### Prompt Design: 
-The AI agent's behavior is shaped by a carefully designed prompt. It includes a task for the agent, a way to respond to messages, and a textual representation of the game environment. The prompt aims to provide the necessary context for the agent's decision-making process. To ensure optimal performance, numeric values, such as vector positions, are presented in natural language explanations rather than raw numerical format.
+The AI agent's behavior is shaped by a carefully designed prompt that includes a task, agent identity, personality traits, and information about the game environment. The prompt provides context for the agent's decision-making process and helps simulate human-like behavior. Numeric values, such as vector positions, are presented in natural language explanations for better understanding.
 
 ### Message Response: 
 The ChatGPT model generates responses to messages received from the player. These responses are structured in JSON format and contain instructions, suggestions, or insights relevant to the game scenario. While the model strives to provide meaningful responses, there can be occasional issues such as excessive newlines or instances where the response format deviates from the expected JSON structure. These issues are more common with the ChatGPT 3.5-turbo model, while the upcoming GPT-4 model shows improvements in response quality. However, it's important to consider the increased cost associated with using GPT-4.
