@@ -28,6 +28,6 @@ public class SetMemoryAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for SetMemoryAction
+
     }
 }

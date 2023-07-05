@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IPlayerController
 {
-    public Rigidbody2D Rigidbody { get; private set; }
-    public BoxCollider2D Collider { get; private set; }
-    public float Speed { get; private set; } = 1.0f;
-    public bool IsMoving { get; private set; } = false;
-    public bool IsPlayer { get; private set; } = true;
-    public Vector2 FacingDirection { get; private set; }
+    private Rigidbody2D m_rigidbody;
+    private BoxCollider2D m_collider;
 
+    public float Speed => m_speed;
+    [SerializeField] private float m_speed = 1.0f;
+
+    public bool IsMoving => m_isMoving;
+    private bool m_isMoving = false;
+
+    public bool IsPlayer => m_isPlayer;
+    [SerializeField] private bool m_isPlayer = true;
+
+    public Vector2 FacingDirection => m_facingDirection;
+    private Vector2 m_facingDirection;
 
     void Awake()
     {
-        Rigidbody = GetComponent<Rigidbody2D>();
-        Collider = GetComponent<BoxCollider2D>();
+        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_collider = GetComponent<BoxCollider2D>();
     }
 
     public Vector2 GetPlayerFacingDirection()
@@ -29,7 +36,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public Vector2 GetColliderPlayerPosition()
     {
-        return Collider.bounds.center;
+        return m_collider.bounds.center;
     }
 
 
@@ -42,7 +49,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
 
     public virtual IEnumerator MoveCoroutine(Vector2 direction, Action onFinish)
     {
-        IsMoving = true;
+        m_isMoving = true;
         Vector2 startPosition = transform.position;
         Vector2 endPosition = startPosition + direction;
 
@@ -52,16 +59,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
         while (elapsedTime < moveDuration)
         {
             elapsedTime += Time.deltaTime;
-            Rigidbody.MovePosition(Vector2.Lerp(startPosition, endPosition, elapsedTime / moveDuration));
+            m_rigidbody.MovePosition(Vector2.Lerp(startPosition, endPosition, elapsedTime / moveDuration));
             yield return null;
         }
 
         // Clamp final position to ensure it's aligned to the grid
         endPosition.x = Mathf.Round(endPosition.x);
         endPosition.y = Mathf.Round(endPosition.y);
-        Rigidbody.MovePosition(endPosition);
+        m_rigidbody.MovePosition(endPosition);
 
-        IsMoving = false;
+        m_isMoving = false;
 
         //GameLogger.LogMessage("You are now at: " + endPosition + " (World position)", LogType.ToChatGpt);
 
@@ -79,16 +86,16 @@ public class PlayerController : MonoBehaviour, IPlayerController
     {
         if (remainingMoves > 0)
         {
-            IsMoving = true;
+            m_isMoving = true;
             Move(directionVector, () =>
             {
                 GameLogger.LogMessage($"Moving in {directionVector}, current pos {(Vector2)gameObject.transform.position}", LogType.Low);
                 onMoveFinished?.Invoke();
-                IsMoving = false;
+                m_isMoving = false;
             });
 
             // Wait for the move to finish
-            yield return new WaitUntil(() => !IsMoving);
+            yield return new WaitUntil(() => !m_isMoving);
 
             if (agent)
             {
@@ -110,7 +117,7 @@ public class PlayerController : MonoBehaviour, IPlayerController
         float distance = 1.0f;
         LayerMask combinedLayerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("Building");
 
-        Vector2 startPosition = Collider.bounds.center;
+        Vector2 startPosition = m_collider.bounds.center;
         Vector2 endPosition = startPosition + direction;
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(startPosition, direction, distance, combinedLayerMask);

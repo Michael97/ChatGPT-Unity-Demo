@@ -4,33 +4,33 @@ using UnityEngine;
 
 public class ResponseBuilder : MonoBehaviour
 {
-    private List<string> executedFunctions;
-    private Dictionary<string, string> functionResults;
+    private List<string> m_executedFunctions;
+    private Dictionary<string, string> m_functionResults;
 
     public ResponseBuilder()
     {
-        executedFunctions = new List<string>();
-        functionResults = new Dictionary<string, string>();
+        m_executedFunctions = new List<string>();
+        m_functionResults = new Dictionary<string, string>();
     }
 
     public void AddExecutedFunction(string functionName)
     {
-        executedFunctions.Add(functionName);
+        m_executedFunctions.Add(functionName);
     }
 
     public void AddFunctionResult(string functionName, string result)
     {
-        functionResults[functionName] = result;
+        m_functionResults[functionName] = result;
     }
 
     public string BuildResponse()
     {
         StringBuilder response = new StringBuilder();
 
-        foreach (string functionName in executedFunctions)
+        foreach (string functionName in m_executedFunctions)
         {
             response.AppendLine($"{functionName} executed.");
-            if (functionResults.TryGetValue(functionName, out string result))
+            if (m_functionResults.TryGetValue(functionName, out string result))
             {
                 response.AppendLine($"Result: {result}");
             }
@@ -47,7 +47,7 @@ public class ResponseBuilder : MonoBehaviour
 
     private void ClearData()
     {
-        executedFunctions.Clear();
-        functionResults.Clear();
+        m_executedFunctions.Clear();
+        m_functionResults.Clear();
     }
 }

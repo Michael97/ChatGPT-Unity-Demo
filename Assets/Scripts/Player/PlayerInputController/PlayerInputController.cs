@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class PlayerInputController : MonoBehaviour
 {
-    public PlayerController playerController;
+    [SerializeField] private PlayerController m_playerController;
 
     private void Awake()
     {
-        playerController = GetComponent<PlayerController>();
-        if (playerController == null)
+        m_playerController = GetComponent<PlayerController>();
+        if (m_playerController == null)
         {
             Debug.LogError("PlayerController component not found on the GameObject");
         }
@@ -16,7 +16,7 @@ public class PlayerInputController : MonoBehaviour
 
     void Update()
     {
-        if (!playerController.IsMoving)
+        if (!m_playerController.IsMoving)
         {
             int horizontal = (int)Input.GetAxisRaw("Horizontal");
             int vertical = (int)Input.GetAxisRaw("Vertical");
@@ -29,7 +29,7 @@ public class PlayerInputController : MonoBehaviour
             if (horizontal != 0 || vertical != 0)
             {
                 Vector2 moveDirection = new Vector2(horizontal, vertical);
-                playerController.Move(moveDirection, () => { });
+                m_playerController.Move(moveDirection, () => { });
             }
         }
     }

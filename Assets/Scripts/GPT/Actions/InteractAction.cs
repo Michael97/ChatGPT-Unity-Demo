@@ -3,21 +3,21 @@ using System.Collections;
 
 public class InteractAction : IAction
 {
-    private Player player;
+    private Player m_player;
     public string[] Parameters { get; set; }
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 
     public InteractAction(Player player)
     {
-        this.player = player;
+        this.m_player = player;
     }
 
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
     {
         ExecuteCalled = true;
-        player.Interaction.OnInteractPressed(player);
+        m_player.Interaction.OnInteractPressed(m_player);
 
         // Since there is no asynchronous operation in this action, we can call onFinish immediately.
         onFinish?.Invoke("Interacted");
@@ -26,6 +26,6 @@ public class InteractAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for GetVisionAction
+        
     }
 }

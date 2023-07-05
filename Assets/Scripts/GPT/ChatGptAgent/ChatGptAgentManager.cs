@@ -5,12 +5,37 @@ using UnityEngine;
 
 public class ChatGptAgentManager : MonoBehaviour
 {
-    public GameObject playerContainer;
+    public GameObject PlayerContainer
+    {        
+        get { return m_playerContainer; }
+        set { m_playerContainer = value; }
+    }
 
-    public Player Player;
+    private GameObject m_playerContainer;
 
-    public ChatGptAgentSensory ChatGptAgentSensory;
-    public ChatGptAgent ChatGptAgent;
+    public Player Player
+    {        
+        get { return m_player; }
+        set { m_player = value; }
+    }
+
+    private Player m_player;
+
+    public ChatGptAgentSensory ChatGptAgentSensory
+    {        
+        get { return m_chatGptAgentSensory; }
+        set { m_chatGptAgentSensory = value; }
+    }
+
+    private ChatGptAgentSensory m_chatGptAgentSensory;
+
+    public ChatGptAgent ChatGptAgent
+    {        
+        get { return ChatGptAgent; }
+        set { ChatGptAgent = value; }
+    }
+
+    private ChatGptAgent m_chatGptAgent;
 
     public ChatGptAgentManager()
     {
@@ -19,8 +44,8 @@ public class ChatGptAgentManager : MonoBehaviour
 
     public void Setup()
     {
-        Player = playerContainer.GetComponent<Player>();
-        ChatGptAgentSensory = gameObject.AddComponent<ChatGptAgentSensory>();
-        ChatGptAgent = GetComponentInChildren<ChatGptAgent>();
+        m_player = m_playerContainer.GetComponent<Player>();
+        m_chatGptAgentSensory = gameObject.AddComponent<ChatGptAgentSensory>();
+        m_chatGptAgent = GetComponentInChildren<ChatGptAgent>();
     }
 }

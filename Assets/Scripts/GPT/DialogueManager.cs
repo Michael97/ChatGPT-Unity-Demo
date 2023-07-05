@@ -3,7 +3,6 @@ using OpenAi.Unity.V1;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public interface IDialogueManager
@@ -15,16 +14,16 @@ public interface IDialogueManager
 public class DialogueManager : MonoBehaviour, IDialogueManager
 {
 
-    public int maxTokenCount = 3696;
-    public int bufferTokenCount = 100;
+    [SerializeField] private int m_maxTokenCount = 3696;
+    [SerializeField] int m_bufferTokenCount = 100;
 
-    private OpenAiChatCompleterV1 chatCompleter;
-    private List<MessageV1> dialogue => chatCompleter.dialogue;
+    private OpenAiChatCompleterV1 m_chatCompleter;
+    private List<MessageV1> m_dialogue => m_chatCompleter.dialogue;
 
 
     public int GetTotalTokenCount()
     {
-        return CountTokens(dialogue);
+        return CountTokens(m_dialogue);
     }
 
     public void UpdateLiveData(string data)
@@ -33,9 +32,9 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
         message.role = MessageV1.MessageRole.user;
         message.content = data;
 
-        if (dialogue.Count > 1)
+        if (m_dialogue.Count > 1)
         {
-            dialogue[1] = message;
+            m_dialogue[1] = message;
         }
     }
 
@@ -45,20 +44,20 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
         message.role = MessageV1.MessageRole.user;
         message.content = prompt;
 
-        if (dialogue.Count > 0)
+        if (m_dialogue.Count > 0)
         {
-            dialogue[0] = message;
+            m_dialogue[0] = message;
             
             //Doesn't really matter what we set here, will will overwrite before sending to api
-            dialogue[1] = message;
+            m_dialogue[1] = message;
         }
-        dialogue.Add(message);
-        dialogue.Add(message);
+        m_dialogue.Add(message);
+        m_dialogue.Add(message);
     }
 
     public void Init(OpenAiChatCompleterV1 chatCompleter)
     {
-        this.chatCompleter = chatCompleter;
+        this.m_chatCompleter = chatCompleter;
 
     }
 
@@ -83,13 +82,13 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
         int tokensPurged = 0;
         int indexToPurge = 2;
 
-        GameLogger.LogMessage("Total tokens = " + CountTokens(dialogue).ToString(), LogType.Low);
+        GameLogger.LogMessage("Total tokens = " + CountTokens(m_dialogue).ToString(), LogType.Low);
 
-        while (CountTokens(dialogue) + ToTokens(input) + bufferTokenCount > maxTokenCount && tokensPurged < tokensToPurge)
+        while (CountTokens(m_dialogue) + ToTokens(input) + m_bufferTokenCount > m_maxTokenCount && tokensPurged < tokensToPurge)
         {
-            if (indexToPurge < dialogue.Count)
+            if (indexToPurge < m_dialogue.Count)
             {
-                int messageTokens = dialogue[indexToPurge].content.Length / 4;
+                int messageTokens = m_dialogue[indexToPurge].content.Length / 4;
                 if (tokensPurged + messageTokens <= tokensToPurge)
                 {
                     tokensPurged += messageTokens;
@@ -109,21 +108,21 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
 
         GameLogger.LogMessage("Purging " + tokensPurged + " tokens from dialogue.", LogType.Low);
 
-        List<MessageV1> newDialogue = new List<MessageV1> { dialogue[0], dialogue[1] };
-        for (int i = indexToPurge; i < dialogue.Count; i++)
+        List<MessageV1> newDialogue = new List<MessageV1> { m_dialogue[0], m_dialogue[1] };
+        for (int i = indexToPurge; i < m_dialogue.Count; i++)
         {
-            newDialogue.Add(dialogue[i]);
+            newDialogue.Add(m_dialogue[i]);
         }
-        dialogue.Clear();
-        dialogue.AddRange(newDialogue);
+        m_dialogue.Clear();
+        m_dialogue.AddRange(newDialogue);
     }
 
 
     public int GetInitialPromptSize()
     {
-        if (dialogue.Count > 0)
+        if (m_dialogue.Count > 0)
         {
-            return dialogue[0].content.Length / 4;
+            return m_dialogue[0].content.Length / 4;
         }
         return 0;
     }
@@ -132,14 +131,11 @@ public class DialogueManager : MonoBehaviour, IDialogueManager
     {
         StringBuilder sb = new StringBuilder();
 
-        foreach (MessageV1 message in dialogue)
+        foreach (MessageV1 message in m_dialogue)
         {
             sb.AppendLine($"[{message.role}]: {message.content}");
         }
 
         File.AppendAllText(filePath, sb.ToString());
     }
-
-
-    // Add other methods and logic specific to your project here
 }

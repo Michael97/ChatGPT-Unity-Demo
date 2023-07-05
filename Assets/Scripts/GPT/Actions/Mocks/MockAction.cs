@@ -1,13 +1,10 @@
-using NUnit.Framework.Internal;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MockAction : IAction
 {
     public string[] Parameters { get; set; }
-
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 

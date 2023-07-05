@@ -8,11 +8,11 @@ public class GetPlayerPositionAction : IAction
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 
-    private IPlayerController playerController;
+    private IPlayerController m_iPlayerController;
 
-    public GetPlayerPositionAction(IPlayerController playerController)
+    public GetPlayerPositionAction(IPlayerController iPlayerController)
     {
-        this.playerController = playerController;
+        this.m_iPlayerController = iPlayerController;
     }
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
@@ -21,7 +21,7 @@ public class GetPlayerPositionAction : IAction
 
         ExecuteCalled = true;
 
-        var position = playerController.GetPlayerPosition();
+        var position = m_iPlayerController.GetPlayerPosition();
 
         var positionString = $"({(int)position.x},{(int)position.y})";
 
@@ -32,6 +32,6 @@ public class GetPlayerPositionAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for GetStatsAction
+
     }
 }

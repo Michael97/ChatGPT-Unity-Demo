@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GoToAction : IAction
 {
-    private ChatGptAgent agent;
-    private bool cancelMovement;
+    private ChatGptAgent m_chatGptAgent;
+    private bool m_cancelMovement;
     public string[] Parameters { get; set; }
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
@@ -13,8 +13,8 @@ public class GoToAction : IAction
 
     public GoToAction(ChatGptAgent agent)
     {
-        this.agent = agent;
-        this.cancelMovement = false;
+        this.m_chatGptAgent = agent;
+        this.m_cancelMovement = false;
     }
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
@@ -27,7 +27,7 @@ public class GoToAction : IAction
             int.TryParse(parameters[1], out unitsToMove);
         }
 
-        MoveInDirection(agent, direction, unitsToMove, () => onFinish?.Invoke("Done"));
+        MoveInDirection(m_chatGptAgent, direction, unitsToMove, () => onFinish?.Invoke("Done"));
 
         string message = $"Successfully moved in direction... {direction} for {unitsToMove} units";
 
@@ -40,7 +40,7 @@ public class GoToAction : IAction
 
     public void Cancel()
     {
-        cancelMovement = true;
+        m_cancelMovement = true;
     }
 
     protected virtual void MoveInDirection(ChatGptAgent agent, string direction, int unitsToMove, Action onFinish)
@@ -69,7 +69,7 @@ public class GoToAction : IAction
                 return;
         }
 
-        cancelMovement = false;
+        m_cancelMovement = false;
 
         agent.Player.Controller.MoveUnits(agent, unitsToMove, directionVector, () => {
             //GameLogger.LogMessage($"GoTo Request Complete: Current world position is {(Vector2)playerController.gameObject.transform.position}", LogType.ToChatGpt);

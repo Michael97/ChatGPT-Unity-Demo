@@ -26,6 +26,6 @@ public class GetAllMemoryAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for GetAllMemoryAction
+
     }
 }

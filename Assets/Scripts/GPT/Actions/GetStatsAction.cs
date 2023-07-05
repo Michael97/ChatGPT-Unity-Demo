@@ -8,11 +8,11 @@ public class GetStatsAction : IAction
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 
-    private IPlayerStats playerStats;
+    private IPlayerStats iPlayerStats;
 
-    public GetStatsAction(IPlayerStats playerStats)
+    public GetStatsAction(IPlayerStats iPlayerStats)
     {
-        this.playerStats = playerStats;
+        this.iPlayerStats = iPlayerStats;
     }
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
@@ -21,7 +21,7 @@ public class GetStatsAction : IAction
 
         ExecuteCalled = true;
 
-        string stats = playerStats.GetStats();
+        string stats = iPlayerStats.GetStats();
 
         onFinish?.Invoke(stats);
 
@@ -30,6 +30,6 @@ public class GetStatsAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for GetStatsAction
+
     }
 }

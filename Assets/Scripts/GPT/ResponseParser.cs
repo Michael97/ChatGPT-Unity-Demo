@@ -11,16 +11,16 @@ public class ResponseParser : MonoBehaviour, IResponseParser
 {
     public static ResponseParser Instance { get; private set; }
 
-    public ChatGptAgent agent;
+    [SerializeField] private ChatGptAgent m_agent;
 
-    public IActionFactory actionFactory { get; set; }
+    protected IActionFactory m_actionFactory;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            actionFactory = new ActionFactory(agent);
+            m_actionFactory = new ActionFactory(m_agent);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -77,7 +77,7 @@ public class ResponseParser : MonoBehaviour, IResponseParser
                     return actions;
                 }
 
-                IAction action = actionFactory.GetAction(actionName);
+                IAction action = m_actionFactory.GetAction(actionName);
 
                 if (action != null)
                 {

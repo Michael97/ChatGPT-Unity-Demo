@@ -5,29 +5,29 @@ using UnityEngine;
 
 public static class GameLogger
 {
-    private static List<LogEntry> logEntries = new List<LogEntry>();
-    public static List<LogEntry> LogEntries => logEntries;
+    private static List<LogEntry> m_logEntries = new List<LogEntry>();
+    public static List<LogEntry> LogEntries => m_logEntries;
 
-    private static string toChatGptEntries = "";
-    public static string ToChatGptEntries => toChatGptEntries;
+    private static string m_toChatGptEntries = "";
+    public static string ToChatGptEntries => m_toChatGptEntries;
 
-    private static DateTime startTime = DateTime.UtcNow;
+    private static DateTime m_startTime = DateTime.UtcNow;
 
     public static void LogMessage(string message, LogType logType)
     {
-        TimeSpan elapsedTime = DateTime.UtcNow - startTime;
+        TimeSpan elapsedTime = DateTime.UtcNow - m_startTime;
         LogEntry entry = new LogEntry(logType, elapsedTime, message);
-        logEntries.Add(entry);
+        m_logEntries.Add(entry);
 
         if (logType == LogType.ToChatGpt)
         {
-            if (string.IsNullOrEmpty(toChatGptEntries))
+            if (string.IsNullOrEmpty(m_toChatGptEntries))
             {
-                toChatGptEntries = message;
+                m_toChatGptEntries = message;
             }
             else
             {
-                toChatGptEntries += "\n" + message;
+                m_toChatGptEntries += "\n" + message;
             }
         }
 
@@ -38,27 +38,27 @@ public static class GameLogger
     {
         using (StreamWriter writer = new StreamWriter(fileName, true)) // true enables appending mode
         {
-            foreach (LogEntry entry in logEntries)
+            foreach (LogEntry entry in m_logEntries)
             {
                 writer.WriteLine(entry.ToString());
             }
         }
 
         // Clear log entries after writing to file
-        logEntries.Clear();
+        m_logEntries.Clear();
     }
 
 
     public static void ClearToChatGptEntries()
     {
-        toChatGptEntries = "";
+        m_toChatGptEntries = "";
     }
 
     public static void SaveFullLog(string fileName)
     {
         using (StreamWriter writer = new StreamWriter(fileName))
         {
-            foreach (LogEntry entry in logEntries)
+            foreach (LogEntry entry in m_logEntries)
             {
                 writer.WriteLine(entry.ToString());
             }
@@ -69,7 +69,7 @@ public static class GameLogger
     {
         using (StreamWriter writer = new StreamWriter(fileName))
         {
-            foreach (LogEntry entry in logEntries)
+            foreach (LogEntry entry in m_logEntries)
             {
                 if (entry.Type == LogType.FromChatGpt)
                 {
@@ -82,9 +82,9 @@ public static class GameLogger
     // Add this method to the GameLogger class
     public static void Reset()
     {
-        logEntries = new List<LogEntry>();
-        toChatGptEntries = "";
-        startTime = DateTime.UtcNow;
+        m_logEntries = new List<LogEntry>();
+        m_toChatGptEntries = "";
+        m_startTime = DateTime.UtcNow;
     }
 
 }

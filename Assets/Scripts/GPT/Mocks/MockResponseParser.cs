@@ -11,7 +11,7 @@ public class MockResponseParser : ResponseParser
     public MockResponseParser(MockActionFactory mockActionFactory)
         : base()
     {
-        actionFactory = mockActionFactory;
+        m_actionFactory = mockActionFactory;
     }
 
     public override List<IAction> Parse(string response)

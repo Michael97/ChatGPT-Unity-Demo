@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,19 +13,19 @@ public interface ILiveDataUpdater
 
 public class LiveDataManager : MonoBehaviour, ILiveData, ILiveDataUpdater
 {
-    [SerializeField] private ActionExecutor actionExecutor;
-    [SerializeField] private ActionParser actionParser;
+    [SerializeField] private ActionExecutor m_actionExecutor;
+    [SerializeField] private ActionParser m_actionParser;
 
-    private string playerStats;
-    private string position;
-    private string inventory;
-    private string environment;
-    private string memory;
+    private string m_playerStats;
+    private string m_position;
+    private string m_inventory;
+    private string m_environment;
+    private string m_memory;
 
     public void Init(ChatGptAgent agent)
     {
-        actionExecutor = new ActionExecutor();
-        actionParser = new ActionParser(agent);
+        m_actionExecutor = new ActionExecutor();
+        m_actionParser = new ActionParser(agent);
     }
 
     void Start()
@@ -36,17 +35,17 @@ public class LiveDataManager : MonoBehaviour, ILiveData, ILiveDataUpdater
 
     private void SetLiveData(string playerStats, string position, string inventory, string environment, string memory)
     {
-        this.playerStats = playerStats;
-        this.position = position;
-        this.inventory = inventory;
-        this.environment = environment;
-        this.memory = memory;
+        m_playerStats = playerStats;
+        m_position = position;
+        m_inventory = inventory;
+        m_environment = environment;
+        m_memory = memory;
     }
 
     public string GetLiveData()
     {
         UpdateLiveData();
-        return $"ESSENTIAL - Below is live data from the world, after each message, refer here to update your knowledge of the world:\nYour Position:\n{position}\n\nYour Stats:\n{playerStats}\n\nInventory:\n{inventory}\n\nEnvironment:\n{environment}";
+        return $"ESSENTIAL - Below is live data from the world, after each message, refer here to update your knowledge of the world:\nYour Position:\n{m_position}\n\nYour Stats:\n{m_playerStats}\n\nInventory:\n{m_inventory}\n\nEnvironment:\n{m_environment}";
     }
 
     public void UpdateLiveData()
@@ -54,7 +53,7 @@ public class LiveDataManager : MonoBehaviour, ILiveData, ILiveDataUpdater
         var stringActions = "Actions:\n- adminGetStats()\n- adminGetPlayerPosition()\n- adminGetInventory()\n- adminGetVision()\n- adminGetMemoryKeys()";
 
         // Parse the response and execute the actions.
-        List<IAction> actions = actionParser.Parse(stringActions);
+        List<IAction> actions = m_actionParser.Parse(stringActions);
         // Define and initialize the actionResults dictionary
         Dictionary<IAction, string> actionResults = new Dictionary<IAction, string>();
 
@@ -62,7 +61,7 @@ public class LiveDataManager : MonoBehaviour, ILiveData, ILiveDataUpdater
 
         foreach (var action in actions)
         {
-            StartCoroutine(actionExecutor.Execute(action, result => {
+            StartCoroutine(m_actionExecutor.Execute(action, result => {
                 actionResults[action] = result;
                 finishedActionsCount++;
 
@@ -82,29 +81,29 @@ public class LiveDataManager : MonoBehaviour, ILiveData, ILiveDataUpdater
         {
             if (actionResult.Key is GetStatsAction)
             {
-                playerStats = actionResult.Value;
+                m_playerStats = actionResult.Value;
             }
             else if (actionResult.Key is GetPlayerPositionAction)
             {
-                position = actionResult.Value;
+                m_position = actionResult.Value;
             }
             else if (actionResult.Key is GetInventoryAction)
             {
-                inventory = actionResult.Value;
+                m_inventory = actionResult.Value;
             }
             else if (actionResult.Key is GetVisionAction)
             {
-                environment = actionResult.Value;
+                m_environment = actionResult.Value;
             }
             else if (actionResult.Key is GetAllMemoryAction)
             {
-                memory = actionResult.Value;
+                m_memory = actionResult.Value;
             }
         }
 
         // Update the live data
-        SetLiveData(playerStats, position, inventory, environment, memory);
+        SetLiveData(m_playerStats, m_position, m_inventory, m_environment, m_memory);
 
-        ChatGptAgentUIManager.Instance.UpdateUI(playerStats, position, inventory, environment, memory);
+        ChatGptAgentUIManager.Instance.UpdateUI(m_playerStats, m_position, m_inventory, m_environment, m_memory);
     }
 }

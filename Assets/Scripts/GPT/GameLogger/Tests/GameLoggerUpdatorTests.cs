@@ -13,11 +13,11 @@ public class GameLoggerUpdaterTests
     {
         gameLoggerUpdaterGameObject = new GameObject();
         gameLoggerUpdater = gameLoggerUpdaterGameObject.AddComponent<GameLoggerUpdater>();
-        gameLoggerUpdater.logFileName = "test_game_logs.txt";
+        gameLoggerUpdater.LogFileName = "test_game_logs.txt";
 
-        if (File.Exists(gameLoggerUpdater.logFileName))
+        if (File.Exists(gameLoggerUpdater.LogFileName))
         {
-            File.Delete(gameLoggerUpdater.logFileName);
+            File.Delete(gameLoggerUpdater.LogFileName);
         }
     }
 
@@ -29,9 +29,9 @@ public class GameLoggerUpdaterTests
             GameObject.Destroy(gameLoggerUpdaterGameObject);
         }
 
-        if (File.Exists(gameLoggerUpdater.logFileName))
+        if (File.Exists(gameLoggerUpdater.LogFileName))
         {
-            File.Delete(gameLoggerUpdater.logFileName);
+            File.Delete(gameLoggerUpdater.LogFileName);
         }
     }
 
@@ -54,10 +54,10 @@ public class GameLoggerUpdaterTests
         }
 
         // Wait for two update intervals to ensure log updates have occurred
-        yield return new WaitForSeconds(gameLoggerUpdater.updateInterval * 2);
+        yield return new WaitForSeconds(gameLoggerUpdater.UpdateInterval * 2);
 
-        Assert.IsTrue(File.Exists(gameLoggerUpdater.logFileName));
-        string logContent = File.ReadAllText(gameLoggerUpdater.logFileName);
+        Assert.IsTrue(File.Exists(gameLoggerUpdater.LogFileName));
+        string logContent = File.ReadAllText(gameLoggerUpdater.LogFileName);
         Assert.IsTrue(logContent.Contains("Test message"));
     }
 

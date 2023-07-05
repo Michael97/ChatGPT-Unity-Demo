@@ -8,21 +8,32 @@ public class ChatGptAgentInitializer : MonoBehaviour
     public static ChatGptAgentInitializer Instance { get; private set; }
 
     [Tooltip("The default prefab for the player")]
-    public GameObject m_playerContainerPrefab;
+    [SerializeField] private GameObject m_playerContainerPrefab;
+
+    public List<ChatGptAgentData> ChatGptAgentData
+    {        
+        get { return m_chatGptAgentData; }
+        set { m_chatGptAgentData = value; }
+    }
 
     [Tooltip("Each item represents an agent to be spawned")]
-    public List<ChatGptAgentData> m_chatGptAgentData;
+    [SerializeField] private List<ChatGptAgentData> m_chatGptAgentData;
 
-    [Tooltip("Each chatgpt agent in the scene")]
-    public List<GameObject> m_chatGptAgentList;
+    public List<GameObject> ChatGptAgentList
+    {        
+        get { return m_chatGptAgentList; }
+        set { m_chatGptAgentList = value; }
+    }
 
-    public GameObject m_chatCompleterPrefab;
+    [Tooltip("Each chatgpt agent in the scene")] [SerializeField]
+    private List<GameObject> m_chatGptAgentList;
+
+    [SerializeField] private GameObject m_chatCompleterPrefab;
 
     // Define the spawn area limits
-    public Vector2 minSpawnPosition = new Vector2(-3, -3);
-    public Vector2 maxSpawnPosition = new Vector2(3, 3);
-
-    private HashSet<Vector2> usedPositions = new HashSet<Vector2>();
+    [SerializeField] private Vector2 m_minSpawnPosition = new Vector2(-3, -3);
+    [SerializeField] private Vector2 m_maxSpawnPosition = new Vector2(3, 3);
+    private HashSet<Vector2> m_usedPositions = new HashSet<Vector2>();
 
     private void Awake()
     {
@@ -50,7 +61,7 @@ public class ChatGptAgentInitializer : MonoBehaviour
             Destroy(agent);
         }
         m_chatGptAgentList.Clear();
-        usedPositions.Clear();
+        m_usedPositions.Clear();
 
         // Spawn new agents
         SpawnAgents();
@@ -68,19 +79,19 @@ public class ChatGptAgentInitializer : MonoBehaviour
             do
             {
                 spawnPosition = new Vector2(
-                    Mathf.Round(Random.Range(minSpawnPosition.x, maxSpawnPosition.x)),
-                    Mathf.Round(Random.Range(minSpawnPosition.y, maxSpawnPosition.y))
+                    Mathf.Round(Random.Range(m_minSpawnPosition.x, m_maxSpawnPosition.x)),
+                    Mathf.Round(Random.Range(m_minSpawnPosition.y, m_maxSpawnPosition.y))
                 );
-            } while (usedPositions.Contains(spawnPosition));
+            } while (m_usedPositions.Contains(spawnPosition));
 
             // Add the position to the used positions
-            usedPositions.Add(spawnPosition);
+            m_usedPositions.Add(spawnPosition);
 
             // Set the position of the player container
             playerContainer.transform.position = spawnPosition;
 
             // Instantiate the agent
-            var agent = new GameObject(agentData.playerName).AddComponent<ChatGptAgent>();
+            var agent = new GameObject(agentData.m_playerName).AddComponent<ChatGptAgent>();
             agent.transform.parent = playerContainer.transform;
 
             var openAiChatCompleter = Instantiate(m_chatCompleterPrefab, agent.transform);

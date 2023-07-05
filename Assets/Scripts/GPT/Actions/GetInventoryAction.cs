@@ -8,16 +8,16 @@ public class GetInventoryAction : IAction
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 
-    private IInventory _inventory;
+    private IInventory m_Inventory;
 
     public GetInventoryAction(IInventory inventory)
     {
-        _inventory = inventory;
+        m_Inventory = inventory;
     }
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
     {
-        List<IItem> items = _inventory.GetInventory();
+        List<IItem> items = m_Inventory.GetInventory();
         string inventoryData = "" + string.Join(", ", items);
 
         onFinish?.Invoke(inventoryData);
@@ -28,6 +28,6 @@ public class GetInventoryAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for GetInventoryAction
+
     }
 }

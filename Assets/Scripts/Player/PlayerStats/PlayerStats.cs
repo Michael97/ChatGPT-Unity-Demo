@@ -4,79 +4,77 @@ public class PlayerStats : MonoBehaviour, IPlayerStats
 {
     // Variables for stats
     [SerializeField]
-    private int health = 100;
+    private int m_health = 100;
     [SerializeField]
-    private int maxHealth = 100;
+    private int m_maxHealth = 100;
     [SerializeField]
-    private int hunger = 100;
+    private int m_hunger = 100;
     [SerializeField]
-    private int maxHunger = 100;
+    private int m_maxHunger = 100;
     [SerializeField]
-    private int thirst = 100;
+    private int m_thirst = 100;
     [SerializeField]
-    private int maxThirst = 100;
+    private int m_maxThirst = 100;
     [SerializeField]
-    private int stamina = 100;
+    private int m_stamina = 100;
     [SerializeField]
-    private int maxStamina = 100;
+    private int m_maxStamina = 100;
     [SerializeField]
-    private float temperature = 98.6f;
+    private float m_temperature = 98.6f;
     [SerializeField]
-    private float minTemperature = 95.0f;
+    private float m_minTemperature = 95.0f;
     [SerializeField]
-    private float maxTemperature = 104.0f;
+    private float m_maxTemperature = 104.0f;
 
     // Implement the IPlayerStats properties
-    public int Health => health;
-    public int MaxHealth => maxHealth;
-    public int Hunger => hunger;
-    public int MaxHunger => maxHunger;
-    public int Thirst => thirst;
-    public int MaxThirst => maxThirst;
-    public int Stamina => stamina;
-    public int MaxStamina => maxStamina;
-    public float Temperature => temperature;
-    public float MinTemperature => minTemperature;
-    public float MaxTemperature => maxTemperature;
+    public int Health => m_health;
+    public int MaxHealth => m_maxHealth;
+    public int Hunger => m_hunger;
+    public int MaxHunger => m_maxHunger;
+    public int Thirst => m_thirst;
+    public int MaxThirst => m_maxThirst;
+    public int Stamina => m_stamina;
+    public int MaxStamina => m_maxStamina;
+    public float Temperature => m_temperature;
+    public float MinTemperature => m_minTemperature;
+    public float MaxTemperature => m_maxTemperature;
 
     // Implement the IPlayerStats methods
-    public void SetHealth(int value) => health = Mathf.Clamp(value, 0, maxHealth);
-    public void SetMaxHealth(int value) => maxHealth = Mathf.Max(value, 0);
-    public void SetHunger(int value) => hunger = Mathf.Clamp(value, 0, maxHunger);
-    public void SetMaxHunger(int value) => maxHunger = Mathf.Max(value, 0);
-    public void SetThirst(int value) => thirst = Mathf.Clamp(value, 0, maxThirst);
-    public void SetMaxThirst(int value) => maxThirst = Mathf.Max(value, 0);
-    public void SetStamina(int value) => stamina = Mathf.Clamp(value, 0, maxStamina);
-    public void SetMaxStamina(int value) => maxStamina = Mathf.Max(value, 0);
-    public void SetTemperature(float value) => temperature = Mathf.Clamp(value, minTemperature, maxTemperature);
+    public void SetHealth(int value) => m_health = Mathf.Clamp(value, 0, m_maxHealth);
+    public void SetMaxHealth(int value) => m_maxHealth = Mathf.Max(value, 0);
+    public void SetHunger(int value) => m_hunger = Mathf.Clamp(value, 0, m_maxHunger);
+    public void SetMaxHunger(int value) => m_maxHunger = Mathf.Max(value, 0);
+    public void SetThirst(int value) => m_thirst = Mathf.Clamp(value, 0, m_maxThirst);
+    public void SetMaxThirst(int value) => m_maxThirst = Mathf.Max(value, 0);
+    public void SetStamina(int value) => m_stamina = Mathf.Clamp(value, 0, m_maxStamina);
+    public void SetMaxStamina(int value) => m_maxStamina = Mathf.Max(value, 0);
+    public void SetTemperature(float value) => m_temperature = Mathf.Clamp(value, m_minTemperature, m_maxTemperature);
 
-    public void TakeDamage(int damage) => SetHealth(health - damage);
-    public void Heal(int amount) => SetHealth(health + amount);
-    public void ConsumeFood(int foodValue) => SetHunger(hunger + foodValue);
-    public void ConsumeWater(int waterValue) => SetThirst(thirst + waterValue);
-    public void Rest(int duration) => SetStamina(stamina + duration);
-    public void UpdateTemperature(float deltaTemperature) => SetTemperature(temperature + deltaTemperature);
+    public void TakeDamage(int damage) => SetHealth(m_health - damage);
+    public void Heal(int amount) => SetHealth(m_health + amount);
+    public void ConsumeFood(int foodValue) => SetHunger(m_hunger + foodValue);
+    public void ConsumeWater(int waterValue) => SetThirst(m_thirst + waterValue);
+    public void Rest(int duration) => SetStamina(m_stamina + duration);
+    public void UpdateTemperature(float deltaTemperature) => SetTemperature(m_temperature + deltaTemperature);
 
     public string GetStats()
     {
-        var stats = $"Health: {health}/{maxHealth}\n" +
-               $"Hunger: {hunger}/{maxHunger}\n" +
-               $"Thirst: {thirst}/{maxThirst}\n" +
-               $"Stamina: {stamina}/{maxStamina}\n" +
-               $"Temperature: {temperature}°F";
-
-        //GameLogger.LogMessage($"GetStats Request: {stats}", LogType.ToChatGpt);
+        var stats = $"Health: {m_health}/{m_maxHealth}\n" +
+               $"Hunger: {m_hunger}/{m_maxHunger}\n" +
+               $"Thirst: {m_thirst}/{m_maxThirst}\n" +
+               $"Stamina: {m_stamina}/{m_maxStamina}\n" +
+               $"Temperature: {m_temperature}ï¿½F";
 
         return stats;
     }
 
     public string GetStatsAsString()
     {
-        var stats = $"Health: {health}/{maxHealth}\n" +
-               $"Hunger: {hunger}/{maxHunger}\n" +
-               $"Thirst: {thirst}/{maxThirst}\n" +
-               $"Stamina: {stamina}/{maxStamina}\n" +
-               $"Temperature: {temperature}°F";
+        var stats = $"Health: {m_health}/{m_maxHealth}\n" +
+               $"Hunger: {m_hunger}/{m_maxHunger}\n" +
+               $"Thirst: {m_thirst}/{m_maxThirst}\n" +
+               $"Stamina: {m_stamina}/{m_maxStamina}\n" +
+               $"Temperature: {m_temperature}ï¿½F";
 
         return stats;
     }

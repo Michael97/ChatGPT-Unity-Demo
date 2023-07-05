@@ -4,7 +4,7 @@ using UnityEngine;
 public class Inventory : IInventory
 {
     [SerializeField]
-    private List<Item> items = new List<Item>();
+    private List<Item> m_items = new List<Item>();
 
     public bool AddItem(IItem item)
     {
@@ -15,7 +15,7 @@ public class Inventory : IInventory
         }
         else
         {
-            items.Add(item as Item);
+            m_items.Add(item as Item);
         }
         return true;
     }
@@ -33,7 +33,7 @@ public class Inventory : IInventory
             existingItem.Quantity -= quantity;
             if (existingItem.Quantity == 0)
             {
-                items.Remove(existingItem as Item);
+                m_items.Remove(existingItem as Item);
             }
             return true;
         }
@@ -42,13 +42,13 @@ public class Inventory : IInventory
 
     public IItem GetItem(string itemName)
     {
-        return items.Find(item => item.Name == itemName);
+        return m_items.Find(item => item.Name == itemName);
     }
 
     public List<IItem> GetInventory()
     {
         GameLogger.LogMessage("Getting inventory...", LogType.Low);
-        return new List<IItem>(items);
+        return new List<IItem>(m_items);
     }
 
     public void UseItem(IItem item, Player player)

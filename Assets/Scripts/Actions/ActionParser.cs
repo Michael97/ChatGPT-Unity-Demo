@@ -1,15 +1,19 @@
 using System.Collections.Generic;
-using System;
-using UnityEngine;
 using System.Text.RegularExpressions;
 
 public class ActionParser
 {
-    public IActionFactory actionFactory { get; set; }
+    public IActionFactory ActionFactory 
+    {        
+        get { return m_iActionFactory; }
+        set { m_iActionFactory = value; }
+    }
+    
+    private IActionFactory m_iActionFactory;
 
     public ActionParser(ChatGptAgent agent)
     {
-        actionFactory = new ActionFactory(agent);
+        ActionFactory = new ActionFactory(agent);
     }
 
     public virtual List<IAction> Parse(string response)
@@ -38,7 +42,7 @@ public class ActionParser
                     return actions;
                 }
 
-                IAction action = actionFactory.GetAction(actionName);
+                IAction action = m_iActionFactory.GetAction(actionName);
 
                 if (action != null)
                 {

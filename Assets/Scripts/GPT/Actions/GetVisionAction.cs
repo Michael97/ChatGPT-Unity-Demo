@@ -7,11 +7,11 @@ public class GetVisionAction : IAction
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 
-    private ChatGptAgent agent;
+    private ChatGptAgent m_chatGptAgent;
 
     public GetVisionAction(ChatGptAgent agent)
     {
-        this.agent = agent;
+        this.m_chatGptAgent = agent;
     }
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
@@ -20,7 +20,7 @@ public class GetVisionAction : IAction
 
         ExecuteCalled = true; 
 
-        string visionData = agent.ChatGptAgentSensory.GetVision(agent.Player.Controller.GetColliderPlayerPosition());
+        string visionData = m_chatGptAgent.ChatGptAgentSensory.GetVision(m_chatGptAgent.Player.Controller.GetColliderPlayerPosition());
 
         onFinish?.Invoke(visionData);
 
@@ -31,6 +31,6 @@ public class GetVisionAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for GetVisionAction
+
     }
 }

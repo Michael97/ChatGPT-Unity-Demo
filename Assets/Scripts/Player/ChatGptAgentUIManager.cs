@@ -1,24 +1,21 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ChatGptAgentUIManager : MonoBehaviour
 {
     public static ChatGptAgentUIManager Instance { get; private set; }
 
-    [SerializeField] private TMP_Dropdown agentDropdown;
-    [SerializeField] private TextMeshProUGUI inventoryText;
-    [SerializeField] private TextMeshProUGUI statsText;
-    [SerializeField] private TextMeshProUGUI environmentText;
-    [SerializeField] private TextMeshProUGUI positionText;
-    [SerializeField] private TextMeshProUGUI memoryText;
+    [SerializeField] private TMP_Dropdown m_agentDropdown;
+    [SerializeField] private TextMeshProUGUI m_inventoryText;
+    [SerializeField] private TextMeshProUGUI m_statsText;
+    [SerializeField] private TextMeshProUGUI m_environmentText;
+    [SerializeField] private TextMeshProUGUI m_positionText;
+    [SerializeField] private TextMeshProUGUI m_memoryText;
 
-    public List<ChatGptAgent> agents;
-    public ChatGptAgent selectedAgent;
+    [SerializeField] private List<ChatGptAgent> m_agents;
+    [SerializeField] private ChatGptAgent m_selectedAgent;
 
     private void Awake()
     {
@@ -36,63 +33,60 @@ public class ChatGptAgentUIManager : MonoBehaviour
 
     private void Start()
     {
-        agents = GetAgents(); // Replace with your method to get a list of players
+        m_agents = GetAgents();
         UpdatePlayerDropdown();
-        agentDropdown.onValueChanged.AddListener(OnAgentSelected);
+        m_agentDropdown.onValueChanged.AddListener(OnAgentSelected);
         //UpdateUI();
     }
     
     public void Setup()
     {
-        agents = GetAgents(); // Replace with your method to get a list of players
+        m_agents = GetAgents();
         UpdatePlayerDropdown();
     }
 
     private List<ChatGptAgent> GetAgents()
     {
-        // Add your method to get a list of all players in the game
-        // For example: return GameManager.Instance.GetAllPlayers();
-
         return FindObjectsOfType<ChatGptAgent>().ToList();
     }
 
     private void UpdatePlayerDropdown()
     {
-        agentDropdown.ClearOptions();
+        m_agentDropdown.ClearOptions();
         List<string> playerNames = new List<string>();
-        foreach (ChatGptAgent agent in agents)
+        foreach (ChatGptAgent agent in m_agents)
         {
-            playerNames.Add(agent.AgentData.playerName);
+            playerNames.Add(agent.AgentData.m_playerName);
         }
-        agentDropdown.AddOptions(playerNames);
+        m_agentDropdown.AddOptions(playerNames);
 
-        if (agents.Count > 0)
+        if (m_agents.Count > 0)
         {
-            selectedAgent = agents[0];
+            m_selectedAgent = m_agents[0];
         }
     }
 
     private void OnAgentSelected(int index)
     {
-        selectedAgent = agents[index];
+        m_selectedAgent = m_agents[index];
         //UpdateUI();
     }
 
     public void UpdateUI(string playerStats, string position, string inventory, string environment, string memory)
     {
-        statsText.text = playerStats;
-        positionText.text = position;
-        inventoryText.text = inventory;
-        environmentText.text = environment;
-        memoryText.text = memory;
+        m_statsText.text = playerStats;
+        m_positionText.text = position;
+        m_inventoryText.text = inventory;
+        m_environmentText.text = environment;
+        m_memoryText.text = memory;
     }
 
     public void UpdateUI()
     {
-        if (selectedAgent == null)
+        if (m_selectedAgent == null)
         {
-            inventoryText.text = "";
-            statsText.text = "";
+            m_inventoryText.text = "";
+            m_statsText.text = "";
             return;
         }
 
@@ -102,16 +96,16 @@ public class ChatGptAgentUIManager : MonoBehaviour
 
     private void UpdateInventoryText()
     {
-        List<IItem> items = selectedAgent.Player.Inventory.GetInventory();
-        inventoryText.text = "Inventory:\n";
+        List<IItem> items = m_selectedAgent.Player.Inventory.GetInventory();
+        m_inventoryText.text = "Inventory:\n";
         foreach (IItem item in items)
         {
-            inventoryText.text += $"{item.Name} x{item.Quantity}\n";
+            m_inventoryText.text += $"{item.Name} x{item.Quantity}\n";
         }
     }
 
     private void UpdateStatsText()
     {
-        statsText.text = "Stats:\n" + selectedAgent.Player.Stats.GetStatsAsString();
+        m_statsText.text = "Stats:\n" + m_selectedAgent.Player.Stats.GetStatsAsString();
     }
 }

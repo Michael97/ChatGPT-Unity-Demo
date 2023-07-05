@@ -3,14 +3,14 @@ using System.Collections;
 
 public class UseItemAction : IAction
 {
-    private Player player;
+    private Player m_player;
     public string[] Parameters { get; set; }
     public bool ExecuteCalled { get; set; }
     public bool CancelCalled { get; set; }
 
     public UseItemAction(Player player)
     {
-        this.player = player;
+        this.m_player = player;
     }
 
     public IEnumerator Execute(string[] parameters, Action<string> onFinish)
@@ -18,11 +18,11 @@ public class UseItemAction : IAction
         ExecuteCalled = true;
 
         string itemName = parameters[0].Trim('\'', ' ');
-        IItem item = player.Inventory.GetItem(itemName);
+        IItem item = m_player.Inventory.GetItem(itemName);
 
         if (item != null)
         {
-            player.Inventory.UseItem(item, player);
+            m_player.Inventory.UseItem(item, m_player);
             onFinish?.Invoke($"Used Item: {itemName}");
         }
         else
@@ -35,6 +35,6 @@ public class UseItemAction : IAction
 
     public void Cancel()
     {
-        // Nothing to cancel for UseItemAction
+
     }
 }

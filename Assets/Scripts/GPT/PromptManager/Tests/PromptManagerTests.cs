@@ -1,6 +1,4 @@
 using NUnit.Framework;
-using System.IO;
-using UnityEngine;
 
 public class PromptManagerTests
 {
@@ -16,7 +14,7 @@ public class PromptManagerTests
         mockPromptManager.GeneratePromptString(mockChatGptAgent, out prompt);
         
         // Assert
-        Assert.AreEqual($"This is a mock prompt with playerName: {mockChatGptAgent.GetChatGptAgentData().playerName}, and personalityTypes: {mockChatGptAgent.GetChatGptAgentData().personalityTypes[0].ToString()}, {mockChatGptAgent.GetChatGptAgentData().personalityTypes[1].ToString()}.", prompt);
+        Assert.AreEqual($"This is a mock prompt with playerName: {mockChatGptAgent.AgentData.m_playerName}, and personalityTypes: {mockChatGptAgent.AgentData.m_personalityTypes[0].ToString()}, {mockChatGptAgent.AgentData.m_personalityTypes[1].ToString()}.", prompt);
     }
 
 }

@@ -1,21 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public string Name { get; private set; }
-    public PlayerController Controller { get; private set; }
-    public PlayerStats Stats { get; private set; }
-    public PlayerInteraction Interaction { get; private set; }
-    public Inventory Inventory { get; private set; }
+    public string Name => m_name;
+    [SerializeField] private string m_name;
+
+    public PlayerController Controller => m_controller;
+    [SerializeField] private PlayerController m_controller;
+    public PlayerStats Stats => m_stats;
+    [SerializeField] private PlayerStats m_stats;
+
+    public PlayerInteraction Interaction => m_interaction;
+    [SerializeField] private PlayerInteraction m_interaction;
+
+    public Inventory Inventory => m_inventory;
+    [SerializeField] private Inventory m_inventory;
 
     private void Awake()
     {
-        Name = "";
-        Controller = gameObject.AddComponent<PlayerController>();
-        Stats = new PlayerStats();
-        Interaction = new PlayerInteraction();
-        Inventory = new Inventory();
+        m_name = "";
+        m_controller = gameObject.AddComponent<PlayerController>();
+        m_stats = new PlayerStats();
+        m_interaction = new PlayerInteraction();
+        m_inventory = new Inventory();
     }
 }

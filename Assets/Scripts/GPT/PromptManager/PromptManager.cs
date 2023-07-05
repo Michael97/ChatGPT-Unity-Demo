@@ -16,10 +16,10 @@ public class PromptManager : MonoBehaviour, IPromptManager
         ChatGptAgentData agentData = chatGptAgent.GetChatGptAgentData();
         string promptTemplate = File.ReadAllText(filePath);
 
-        prompt = promptTemplate.Replace("{playerName}", agentData.playerName)
-                                .Replace("{characterName}", agentData.playerName);
+        prompt = promptTemplate.Replace("{playerName}", agentData.m_playerName)
+                                .Replace("{characterName}", agentData.m_playerName);
 
-        string personalityString = string.Join(", ", agentData.personalityTypes.Select(pt => pt.ToString()));
+        string personalityString = string.Join(", ", agentData.m_personalityTypes.Select(pt => pt.ToString()));
         prompt = prompt.Replace("{personalityTypes}", personalityString);
     }
 

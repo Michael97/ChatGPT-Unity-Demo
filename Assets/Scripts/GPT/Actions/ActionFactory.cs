@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 public class ActionFactory : IActionFactory
 {
-    private Dictionary<string, IAction> actionMap;
-    private Dictionary<string, System.Func<IAction>> actionCreators;
+    private Dictionary<string, IAction> m_actionMap;
+    private Dictionary<string, System.Func<IAction>> m_actionCreators;
 
     public ActionFactory(ChatGptAgent agent)
     {
-        actionMap = new Dictionary<string, IAction>
+        m_actionMap = new Dictionary<string, IAction>
         {
             { "move", new GoToAction(agent) },
             { "interact", new InteractAction(agent.Player) },
@@ -30,7 +30,7 @@ public class ActionFactory : IActionFactory
     {
         IAction action;
 
-        if (actionMap.TryGetValue(actionName, out action))
+        if (m_actionMap.TryGetValue(actionName, out action))
         {
             return action;
         }
@@ -40,6 +40,6 @@ public class ActionFactory : IActionFactory
 
     public void RegisterAction(string actionName, IAction action)
     {
-        actionCreators[actionName] = () => action;
+        m_actionCreators[actionName] = () => action;
     }
 }

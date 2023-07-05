@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    public float m_interactionRange = 1.0f;
-    public LayerMask m_interactionLayers;
+    [SerializeField] private float m_interactionRange = 1.0f;
+    [SerializeField] private LayerMask m_interactionLayers;
+    [SerializeField] private bool m_debugMode;
 
     void Update()
     {
-        //DebugDrawCircle();
+        if (m_debugMode)
+            DebugDrawCircle();
     }
 
     public virtual void OnInteractPressed(Player player)

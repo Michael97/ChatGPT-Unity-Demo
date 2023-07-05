@@ -1,15 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
-using OpenAi.Unity.V1;
 using System;
 
 public class ChatGptController : MonoBehaviour, IChatGptController
 {
-    [SerializeField] private ActionParser actionParser;
-    [SerializeField] private ActionExecutor actionExecutor;
+    [SerializeField] private ActionParser m_actionParser;
+    [SerializeField] private ActionExecutor m_actionExecutor;
 
     public void Init(ChatGptAgent agent)
     {
@@ -20,8 +17,8 @@ public class ChatGptController : MonoBehaviour, IChatGptController
     {
         yield return new WaitForSeconds(delay);
 
-        actionParser = new ActionParser(agent);
-        actionExecutor = new ActionExecutor();
+        m_actionParser = new ActionParser(agent);
+        m_actionExecutor = new ActionExecutor();
 
         agent.PromptManager.GeneratePromptString(agent, out string prompt);
 
@@ -78,7 +75,7 @@ public class ChatGptController : MonoBehaviour, IChatGptController
                 GameLogger.ClearToChatGptEntries();
 
                 // Parse the response and execute the actions.
-                List<IAction> actions = actionParser.Parse(response);
+                List<IAction> actions = m_actionParser.Parse(response);
                 // Define and initialize the actionResults dictionary
                 Dictionary<IAction, string> actionResults = new Dictionary<IAction, string>();
 
@@ -86,7 +83,7 @@ public class ChatGptController : MonoBehaviour, IChatGptController
 
                 foreach (var action in actions)
                 {
-                    StartCoroutine(actionExecutor.Execute(action, result => {
+                    StartCoroutine(m_actionExecutor.Execute(action, result => {
                         actionResults[action] = result;
                         finishedActionsCount++;
 

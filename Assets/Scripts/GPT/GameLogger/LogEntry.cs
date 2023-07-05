@@ -2,15 +2,20 @@ using System;
 
 public class LogEntry
 {
-    public LogType Type { get; }
-    public TimeSpan Timestamp { get; }
-    public string Message { get; }
+    public LogType Type => m_type;
+    private LogType m_type;
+
+    public TimeSpan Timestamp => m_timestamp;
+    private TimeSpan m_timestamp;
+
+    public string Message => m_message;
+    private string m_message;
 
     public LogEntry(LogType type, TimeSpan timestamp, string message)
     {
-        Type = type;
-        Timestamp = timestamp;
-        Message = message;
+        m_type = type;
+        m_timestamp = timestamp;
+        m_message = message;
     }
 
     public override string ToString()

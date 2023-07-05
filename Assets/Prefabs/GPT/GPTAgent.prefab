@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd0d91b5c7f180438f61a31f64a92bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openAiChatCompleter: {fileID: 0}
-  customData: {fileID: 0}
+  m_chatGptAgentData: {fileID: 0}
+  m_openAiChatCompleter: {fileID: 0}
 --- !u!114 &5821874971715400609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7c8c576635e7847a2e51c80998bd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visionRadius: 3
+  m_visionRadius: 3
+  m_debugMode: 0
 --- !u!114 &5821874971715400608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,5 +74,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb184415e0731b5428ec4f66478a9c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatGptAgent: {fileID: 5821874971715400614}
-  chatDisplay: {fileID: 0}

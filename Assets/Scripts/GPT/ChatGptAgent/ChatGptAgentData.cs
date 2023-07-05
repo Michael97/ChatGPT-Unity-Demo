@@ -5,11 +5,10 @@ using UnityEngine;
 public class ChatGptAgentData : ScriptableObject
 {
     [Header("General Information")]
-    public string playerName;
+    public string m_playerName;
 
     [Header("Personality")]
-    public List<PersonalityTypes> personalityTypes;
-
+    public List<PersonalityTypes> m_personalityTypes;
 }
 
 public enum PersonalityTypes

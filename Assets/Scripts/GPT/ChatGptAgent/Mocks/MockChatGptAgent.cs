@@ -5,13 +5,19 @@ using UnityEngine.Networking;
 
 public class MockChatGptAgent : IChatGptAgent
 {
-    private ChatGptAgentData data;
+    public ChatGptAgentData AgentData
+    {        
+        get { return m_agentData; }
+        set { m_agentData = value; }
+    }
+    private ChatGptAgentData m_agentData;
+    
 
     public MockChatGptAgent()
     {
-        data = ScriptableObject.CreateInstance<ChatGptAgentData>();
-        data.playerName = "MockPlayer";
-        data.personalityTypes = new List<PersonalityTypes>
+        m_agentData = ScriptableObject.CreateInstance<ChatGptAgentData>();
+        m_agentData.m_playerName = "MockPlayer";
+        m_agentData.m_personalityTypes = new List<PersonalityTypes>
         {
             PersonalityTypes.Aggressive,
             PersonalityTypes.Friendly
@@ -25,6 +31,6 @@ public class MockChatGptAgent : IChatGptAgent
 
     public ChatGptAgentData GetChatGptAgentData()
     {
-        return data;
+        return m_agentData;
     }
 }

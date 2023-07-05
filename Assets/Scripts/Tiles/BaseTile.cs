@@ -1,19 +1,18 @@
 using Newtonsoft.Json.Linq;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class BaseTile : MonoBehaviour
 {
     [SerializeField]
-    public BaseTileData tileDataSO;
+    protected BaseTileData m_tileDataSO;
 
-    private TileType _tileType;
-    private string _tileName;
-    private int _movementCost;
-    private bool _isWalkable;
-    private bool _isInteractable;
-    private string _description;
-    private Vector2 _position;
+    private TileType m_tileType;
+    private string m_tileName;
+    private int m_movementCost;
+    private bool m_isWalkable;
+    private bool m_isInteractable;
+    private string m_description;
+    private Vector2 m_position;
 
     public BaseTile()
     {
@@ -21,80 +20,80 @@ public class BaseTile : MonoBehaviour
 
     public BaseTile(TileType tileType, string tileName, int movementCost, bool isWalkable, string description, bool isInteractable)
     {
-        _tileType = tileType;
-        _tileName = tileName;
-        _movementCost = movementCost;
-        _isWalkable = isWalkable;
-        _isInteractable = isInteractable;
-        _description = description;
-        _position = (Vector2)transform.position;
+        m_tileType = tileType;
+        m_tileName = tileName;
+        m_movementCost = movementCost;
+        m_isWalkable = isWalkable;
+        m_isInteractable = isInteractable;
+        m_description = description;
+        m_position = (Vector2)transform.position;
         
     }
 
     private void Awake()
     {
-        if (tileDataSO != null)
+        if (m_tileDataSO != null)
         {
-            _tileType = tileDataSO.tileType;
-            _tileName = tileDataSO.tileName;
-            _movementCost = tileDataSO.movementCost;
-            _isWalkable = tileDataSO.isWalkable;
-            _isInteractable = tileDataSO.isInteractable;
-            _description = tileDataSO.description;
-            _position = (Vector2)transform.position;
+            m_tileType = m_tileDataSO.m_tileType;
+            m_tileName = m_tileDataSO.m_tileName;
+            m_movementCost = m_tileDataSO.m_movementCost;
+            m_isWalkable = m_tileDataSO.m_isWalkable;
+            m_isInteractable = m_tileDataSO.m_isInteractable;
+            m_description = m_tileDataSO.m_description;
+            m_position = (Vector2)transform.position;
         }
     }
 
     public TileType TileType
     {
-        get { return _tileType; }
-        set { _tileType = value; }
+        get { return m_tileType; }
+        set { m_tileType = value; }
     }
 
     public string TileName
     {
-        get { return _tileName; }
-        set { _tileName = value; }
+        get { return m_tileName; }
+        set { m_tileName = value; }
     }
 
     public int MovementCost
     {
-        get { return _movementCost; }
-        set { _movementCost = value; }
+        get { return m_movementCost; }
+        set { m_movementCost = value; }
     }
 
     public bool IsWalkable
     {
-        get { return _isWalkable; }
-        set { _isWalkable = value; }
+        get { return m_isWalkable; }
+        set { m_isWalkable = value; }
     }
 
     public bool IsInteractable
     {
-        get { return _isInteractable; }
-        set { _isInteractable = value; }
+        get { return m_isInteractable; }
+        set { m_isInteractable = value; }
     }
 
     public string Description
     {
-        get { return _description; }
-        set { _description = value; }
+        get { return m_description; }
+        set { m_description = value; }
     }
 
     public Vector2 Position
     {
-        get { return _position; }
-        set { _position = (Vector2)transform.position; }
+        get { return m_position; }
+        set { m_position = (Vector2)transform.position; }
     }
 
     public virtual JObject GetJsonTileData()
     {
         JObject jsonData = new JObject
         {
-            { "tileType", _tileType.ToString() },
-            { "tileName", _tileName },
-            { "description", _description },
-            { "position", new JObject { { "x", _position.x }, { "y", _position.y } } }
+            { "tileType", m_tileType.ToString() },
+            { "tileName", m_tileName },
+            { "description", m_description },
+            { "position", new JObject { { "x", m_position.x }, { "y", m_position.y } } }
         };
 
         return jsonData;

@@ -11,12 +11,12 @@ public enum TileType
 [CreateAssetMenu(fileName = "CustomTileDataSO", menuName = "TileData/CustomTileDataSO", order = 1)]
 public class BaseTileData : ScriptableObject
 {
-    public TileType tileType;
-    public string tileName;
-    public int movementCost;
-    public bool isWalkable;
-    public bool isInteractable;
-    public bool isBlocking;
-    public string description;
-    public Sprite sprite;
+    public TileType m_tileType;
+    public string m_tileName;
+    public int m_movementCost;
+    public bool m_isWalkable;
+    public bool m_isInteractable;
+    public bool m_isBlocking;
+    public string m_description;
+    public Sprite m_sprite;
 }
